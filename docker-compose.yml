@@ -18,6 +18,8 @@ services:
       - '8001:8000'
     volumes:
       - './backend:/var/www/html'
+        # ADD THIS LINE BELOW TO AUTOMATE PERMISSIONS:
+      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
     environment:
       - DB_HOST=mysql
       - DB_PORT=3306
