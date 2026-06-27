@@ -47,11 +47,11 @@ docker compose exec -T mysql mysql -u dev_user -p dev_password my_database < ./d
 // log into mysql to query database via CLI
 
 docker exec -it f6d239e9c718 mysql -u dev_user -p
+docker exec -it 75bcbb7c2f57 mysql -u dev_user -p
 (then) dev_password
 
 // format return values for entire session
 docker exec -it f6d239e9c718 mysql -u dev_user -p -t -E 
-
 
 
 f6d239e9c718 = mysql container id

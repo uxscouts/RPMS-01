@@ -6,13 +6,19 @@ export default function TomatoComponent() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch data from your PHP backend port (mapped to 8001 in your docker-compose)
-    fetch('https://organic-space-meme-jjgjrgwv9grxh5w9g-8001.app.github.dev')
-      .then((response) => {
+    fetch('/api/tomato.php', { cache: 'no-store' })
+      .then(async (response) => {
+        const text = await response.text();
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error(`HTTP ${response.status}: ${text}`);
         }
-        return response.json();
+
+        try {
+          return JSON.parse(text);
+        } catch {
+          throw new Error(`Invalid JSON response: ${text}`);
+        }
       })
       .then((data) => {
         if (data.error) {
@@ -23,7 +29,8 @@ export default function TomatoComponent() {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err.message);
+        console.error('Tomato fetch failed:', err);
+        setError(err.message || 'Unknown error');
         setLoading(false);
       });
   }, []);

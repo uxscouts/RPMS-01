@@ -16,9 +16,10 @@ export default defineConfig({
     // 👇 ADD THIS PROXY BLOCK HERE 👇
     proxy: {
       '/api': {
-        target: 'http://backend:8000', // Docker's internal container address
+        target: 'http://backend:8000',
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       }
     }
   },
